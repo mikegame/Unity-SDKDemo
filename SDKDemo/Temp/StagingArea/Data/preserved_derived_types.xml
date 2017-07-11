@@ -1,5 +1,0 @@
-<linker>
-<assembly fullname="Assembly-CSharp">
-<type fullname="Main" preserve="all"/>
-</assembly>
-</linker>
