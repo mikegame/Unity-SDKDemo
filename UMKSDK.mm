@@ -25,6 +25,8 @@ const char *createJSONResult (NSDictionary* data) {
     return nStr2CStr(jsonStr);
 }
 
+
+
 extern "C" {
     void _mkLogin()
     {
@@ -43,13 +45,13 @@ extern "C" {
     
     void _mkReportRole(int roleLevel, const char *serverId, const char *serverName, const char *roleId, const char *roleName, const char *dateTime)
     {
-        MKRole *role = [MKRole new];
-        [role setServerId:[NSString stringWithFormat:@"%s",serverId]];
-        [role setServerName:[NSString stringWithFormat:@"%s",serverName]];
-        [role setRoleId:[NSString stringWithFormat:@"%s",roleId]];
-        [role setRoleName:[NSString stringWithFormat:@"%s",roleName]];
+        MKRole *role = [[MKRole alloc] init];
+        [role setServerId:[NSString stringWithUTF8String:serverId]];
+        [role setServerName:[NSString stringWithUTF8String:serverName]];
+        [role setRoleId:[NSString stringWithUTF8String:roleId]];
+        [role setRoleName:[NSString stringWithUTF8String:roleName]];
         [role setRoleLevel:roleLevel];
-        [role setLoginTime:[NSString stringWithFormat:@"%s",dateTime]];
+        [role setLoginTime:[NSString stringWithUTF8String:dateTime]];
         [[MKSDK sharedXSSDK] mkReportRole:role];
     }
     
@@ -101,20 +103,24 @@ extern "C" {
         
     }
     
-    void _mkPay(int totalFee, const char *cpOrderId, const char *serverId, const char *roleId,
-                const char *roleName, const char *productId, const char *productName, const char *productDescription, const char *customInfo)
+    void _mkPay(int totalFee, const char *cpOrderId,
+                const char *serverId, const char *roleId,
+                const char *roleName, const char *productId,
+                const char *productName, const char *productDescription,
+                const char *customInfo)
     {
         MKOrder *order = [MKOrder new];
-        [order setServerId:[NSString stringWithFormat:@"%s",serverId]];
+        [order setServerId:[NSString stringWithUTF8String:serverId]];
         [order setTotalFee:totalFee];
-        [order setRoleId:[NSString stringWithFormat:@"%s",roleId]];
-        [order setRoleName:[NSString stringWithFormat:@"%s",roleName]];
-        [order setProductName:[NSString stringWithFormat:@"%s",productName]];
-        [order setProductDescription:[NSString stringWithFormat:@"%s",productDescription]];
-        [order setCpOrderId:[NSString stringWithFormat:@"%s",cpOrderId]];
-        [order setCustomInfo:[NSString stringWithFormat:@"%s",customInfo]];
-        [order setProductId:[NSString stringWithFormat:@"%s",productId]];
+        [order setRoleId:[NSString stringWithUTF8String:roleId]];
+        [order setRoleName:[NSString stringWithUTF8String:roleName]];
+        [order setProductName:[NSString stringWithUTF8String:productName]];
+        [order setProductDescription:[NSString stringWithUTF8String:productDescription]];
+        [order setCpOrderId:[NSString stringWithUTF8String:cpOrderId]];
+        [order setCustomInfo:[NSString stringWithUTF8String:customInfo]];
+        [order setProductId:[NSString stringWithUTF8String:productId]];
         [[MKSDK sharedXSSDK] mkPay:order];
+        
     }
     
 }
